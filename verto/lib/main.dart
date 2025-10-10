@@ -1,20 +1,20 @@
 // lib/main.dart
 
 import 'package:flutter/material.dart';
-import 'package:verto/pages/profile/profile.dart';
-
+import 'package:verto/pages/login/login.dart';
+import 'package:verto/pages/register/register.dart';
 void main() {
-  runApp(const MyApp()); // Runs the root widget of the app
+  runApp(const VertoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class VertoApp extends StatelessWidget {
+  const VertoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ProfilePage(),
+      home: LoginPage()
     );
   }
 }
+

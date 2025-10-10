@@ -1,3 +1,5 @@
+// lib/main.dart
+
 import 'package:flutter/material.dart';
 import 'package:verto/pages/login/login.dart';
 import 'package:verto/pages/register/register.dart';

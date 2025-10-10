@@ -14,7 +14,7 @@ class _ProfilePageState extends State<ProfilePage> {
     Session(hostID: "", id: "", price: 10, startTime: DateTime(2025, 10, 12, 20)),
     Session(hostID: "", id: "", price: 10, startTime: DateTime(2025, 10, 11)),
     Session(hostID: "", id: "", price: 20, startTime: DateTime(2025, 10, 11, 1)),
-    Session(hostID: "", id: "", price: 20, startTime: DateTime(2025, 10, 11, 2))
+    Session(hostID: "", id: "", price: 20, startTime: DateTime(2025, 10, 11, 3))
   ];
 
   final String userName = 'abcxyz';
@@ -26,7 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
   }  
   List<Session> get filteredSessions {
     return sessions.where((session) {
-      if (session.startTime == null) return false;
       return isSameDay(session.startTime, selectedDate);
     }).toList();
   }
@@ -70,6 +69,11 @@ class _ProfilePageState extends State<ProfilePage> {
               userName,
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
+            const SizedBox(height: 16),
+
+             Expanded(
+              child: SessionTimeline(sessions: filteredSessions), 
+            ),
              Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -85,15 +89,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-
-             Expanded(
-              child: SessionTimeline(sessions: filteredSessions), 
-            ),
+            const SizedBox(height: 48),
           ],
         ),
       ),
     );
   }
 }
-

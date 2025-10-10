@@ -1,7 +1,8 @@
 // lib/main.dart
 
 import 'package:flutter/material.dart';
-import 'package:verto/pages/profile/profile.dart';
+//import 'package:verto/pages/profile/profile.dart';
+import 'package:verto/pages/sessioncreation/create_session.dart';
 
 void main() {
   runApp(const MyApp()); // Runs the root widget of the app
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ProfilePage(),
+      home: CreateSession() ,
     );
   }
 }

@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS ratings;
+DROP EXTENSION IF EXISTS "pgcrypto";

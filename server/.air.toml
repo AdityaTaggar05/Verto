@@ -1,0 +1,18 @@
+# ===========================
+# AIR CONFIGURATION FILE
+# ===========================
+
+root = "."
+tmp_dir = "tmp"
+[build]
+cmd = "go build -o ./tmp/main.exe ."
+
+clear = true
+delay = 1000
+exclude_dir = ["tmp", "vendor", "node_modules"]
+include_dir = ["internal", "cmd"]
+include_ext = ["go", "tpl", "tmpl", "html"]
+kill_signal = "SIGTERM"
+
+[misc]
+cmd = "cmd"

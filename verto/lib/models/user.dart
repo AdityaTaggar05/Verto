@@ -7,25 +7,23 @@ class User {
   int level;
   int xp;
 
-  User ({
+  User({
     required this.firstName,
     required this.lastName,
     required this.username,
     required this.email,
     required this.coins,
     required this.level,
-    required this.xp
+    required this.xp,
   });
 
-  static fromJson(Map<String, dynamic> json) {
-    return User(
+  static fromJson(Map<String, dynamic> json) => User(
     firstName: json["first_name"],
     lastName: json["last_name"],
     username: json["username"],
     email: json["email"],
     coins: json["coins"],
     level: json["level"],
-    xp: json["xp"]
+    xp: json["xp"],
   );
-  }
 }

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:verto/widgets/coinbalance.dart';
+import 'widgets/carousel.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
-
   @override
   State<ExplorePage> createState() => _ExplorePageState();
 }
 
 class _ExplorePageState extends State<ExplorePage> {
+  bool isCarousel = true;
 
   final TextEditingController _searchController = TextEditingController();
 
   final List<String> _allSessions = [
-    'Introduction to Flutter',
+    'Introduction to flutter',
     'State Management with Provider',
     'Advanced Dart Concepts',
     'Firebase for Flutter Apps',
@@ -35,6 +37,7 @@ class _ExplorePageState extends State<ExplorePage> {
     final query = _searchController.text.toLowerCase();
     setState(() {
       _filteredSessions = _allSessions.where((session) {
+        isCarousel = false;
         final sessionLower = session.toLowerCase();
         return sessionLower.contains(query);
       }).toList();
@@ -53,13 +56,11 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        toolbarHeight: 20,
-      ),
+      appBar: AppBar(backgroundColor: Colors.white, toolbarHeight: 20),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: 70,
@@ -69,7 +70,7 @@ class _ExplorePageState extends State<ExplorePage> {
               ),
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                controller: SearchController(),
+                controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search for sessions...',
                   border: InputBorder.none,
@@ -84,25 +85,142 @@ class _ExplorePageState extends State<ExplorePage> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                itemCount: _filteredSessions.length,
-                itemBuilder: (context, index) {
-                  final session = _filteredSessions[index];
-                  return Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    child: ListTile(
-                      title: Text(session),
-                      leading: const Icon(Icons.class_, color: Colors.blueAccent),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: (isCarousel)
+                          ? [
+                              Text(
+                                'Recently added...',
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              RecentlyAddedCarousel(),
+                              SizedBox(height: 20),
+                              Text(
+                                'Something you might like...',
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                            ]
+                          : [SizedBox(height: 20)],
                     ),
-                  );
-                },
+                    ...List.generate(_filteredSessions.length, (index) {
+                      final session = _filteredSessions[index];
+                      return SessionCard(session: session);
+                    }),
+                  ],
+                ),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SessionCard extends StatefulWidget {
+  const SessionCard({super.key, required this.session});
+
+  final String session;
+
+  @override
+  State<SessionCard> createState() => _SessionCardState();
+}
+
+class _SessionCardState extends State<SessionCard> {
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => setState(() => isExpanded = !isExpanded),
+      child: Container(
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [BoxShadow(color: Colors.grey[300]!, blurRadius: 6)],
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset('assets/pfp.jpg', height: 80, width: 80),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          widget.session,
+                          maxLines: 2,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 20,
+                            height: 0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 12),
+                        Text('Taken by: Aditya Taggar',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text('Timings: 4:00 pm to 5:00 pm',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                CoinBalance(),
+              ],
+            ),
+            if (isExpanded) ...[
+              Divider(color: Colors.grey.shade600, height: 32),
+              Text(
+                "Flutter is an open-source software development kit (SDK) developed by Google",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  backgroundColor: Colors.blueAccent.shade700,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                child: const Text(
+                  'Book Now',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
           ],
         ),
       ),

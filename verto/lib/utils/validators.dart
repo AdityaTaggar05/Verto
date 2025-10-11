@@ -4,9 +4,9 @@ String? emailValidator(String? input) {
     }
     
     // Regular expression for email validation
-    final emailRegex = RegExp(r"/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/s");
+    final emailRegex = RegExp("\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
 
-    if (!emailRegex.hasMatch(input)) {
+    if (!input.contains('@')) {
       return 'Please enter a valid email';
     }
     

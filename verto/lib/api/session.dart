@@ -53,8 +53,33 @@ void book({
     type: RequestType.post,
     path: "/api/session/book/$id"
   );
-
   return;
 }
 
+Future<List<Session>?> fetchSessionsDaywise({
+  required BuildContext context,
+  // day should be either today or tomorrow
+  required String day,
+}) async {
+  List<Session>? sessions = await makeRequest<List<Session>>(
+    type: RequestType.get,
+    path: "api/sessions/timeline?mode=$day",
+    fromJson: (fetched) => fetched.map<Session>((session) => Session.fromJson(session)).toList(), 
+  );
 
+  // TODO: handle errors in daywise fetching
+}
+
+Future<List<Session>?> fetchSessionSearchwise({
+  required BuildContext context,
+  required int count,
+  required String search
+}) async {
+  List<Session>? sessions = await makeRequest<List<Session>>(
+    type: RequestType.get,
+    path: "api/sessions?count=$count&search=$search",
+    fromJson: (fetched) => fetched.map<Session>((session) => Session.fromJson(session)).toList(),
+  );
+
+  // TODO: handle errors in searcwise fetching
+}

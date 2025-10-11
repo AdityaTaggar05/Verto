@@ -80,7 +80,7 @@ func Register(c fiber.Ctx) error {
 	}
 
 	return utils.RespondSuccess(c, fiber.StatusCreated, "User created successfully", map[string]any{
-		"user":          req,
+		"user":          user,
 		"access_token":  accessToken,
 		"refresh_token": refreshToken,
 	})

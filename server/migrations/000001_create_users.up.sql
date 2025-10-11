@@ -7,7 +7,7 @@ CREATE TABLE users (
 	username varchar(20) NOT NULL,
 	email varchar(50) NOT NULL,
 	pass_hash text NOT NULL,
-	coins int NOT NULL DEFAULT 0,
+	coins int NOT NULL DEFAULT 200,
 	level int NOT NULL DEFAULT 1,
 	xp int NOT NULL DEFAULT 0,
 	created_at timestamp NOT NULL DEFAULT NOW(),

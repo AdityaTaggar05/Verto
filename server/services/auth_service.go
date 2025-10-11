@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	ACCESS_TOKEN_DURATION  = 4 * time.Minute
+	ACCESS_TOKEN_DURATION  = 30 * time.Minute
 	REFRESH_TOKEN_DURATION = 3 * 24 * time.Hour
 )
 
@@ -106,7 +106,7 @@ func Login(c fiber.Ctx) error {
 	}
 
 	// Generate JWT Tokens
-	accessToken, _ := utils.GenerateJWT(req.Username, ACCESS_TOKEN_DURATION)
+	accessToken, _ := utils.GenerateJWT(user.ID, ACCESS_TOKEN_DURATION)
 	refreshToken, err := database.UpdateRefreshToken(c, user.ID, REFRESH_TOKEN_DURATION)
 
 	if err != nil {

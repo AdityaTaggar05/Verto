@@ -10,7 +10,7 @@ cmd = "go build -o ./tmp/main.exe ."
 clear = true
 delay = 1000
 exclude_dir = ["tmp", "vendor", "node_modules"]
-include_dir = ["internal", "cmd"]
+include_dir = ["database", "models", "routes", "services", "utils"]
 include_ext = ["go", "tpl", "tmpl", "html"]
 kill_signal = "SIGTERM"
 

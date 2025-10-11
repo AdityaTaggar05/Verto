@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:verto/services/auth.dart';
 import 'package:verto/services/storage_service.dart';
 
 enum RequestType { post, get }
@@ -15,7 +16,7 @@ Future<T?> makeRequest<T>({
   String? accessToken = StorageService().getAccessToken();
 
   if (accessToken == null) {
-    // TODO: REFRESH
+    // TODO: HANDLE
   }
 
   final Uri uri = Uri.parse("https://verto-5rad.onrender.com$path");
@@ -40,7 +41,9 @@ Future<T?> makeRequest<T>({
     return fromJson(jsonDecode(response.body)["data"]);
   }
 
-  // TODO: Handle refreshing
+  if (response.statusCode == 401) {
+    // TODO: Handle refreshing
+  }
 
   return null;
 }

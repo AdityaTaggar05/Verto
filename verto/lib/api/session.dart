@@ -54,6 +54,7 @@ Future<List<Session>?> fetchSessionsDaywise({
         fetched.map<Session>((session) => Session.fromJson(session)).toList(),
   );
 
+  return sessions;
   // TODO: handle errors in daywise fetching
 }
 
@@ -69,6 +70,7 @@ Future<List<Session>?> fetchSessionSearchwise({
         fetched.map<Session>((session) => Session.fromJson(session)).toList(),
   );
 
+  return sessions;
   // TODO: handle errors in searcwise fetching
 }
 

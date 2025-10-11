@@ -1,5 +1,7 @@
 class Session {
   String id;
+  String title;
+  String description;
   String hostID;
   String title;
   String description;
@@ -9,6 +11,8 @@ class Session {
   DateTime startTime;
   Session({
     required this.id,
+    required this.title,
+    required this.description,
     required this.hostID,
     required this.price,
     required this.startTime,

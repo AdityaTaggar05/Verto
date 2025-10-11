@@ -11,6 +11,7 @@ Future<T?> makeRequest<T>({
   required RequestType type,
   required String path,
   T Function(dynamic)? fromJson,
+  Function? onError,
   BuildContext? context,
   Map<String, dynamic>? data,
   int successCode = 200,
@@ -41,9 +42,15 @@ Future<T?> makeRequest<T>({
       break;
   }
 
-  if (response.statusCode == successCode && fromJson != null) {
-    return fromJson(jsonDecode(response.body)["data"]);
+  print(jsonDecode(response.body));
+
+  if (response.statusCode == successCode) {
+    if (fromJson != null) return fromJson(jsonDecode(response.body)["data"]);
+
+    return null;
   }
+
+  print("BACH GYA");
 
   if (response.statusCode == 401) {
     http.Response res = await http.post(
@@ -78,6 +85,8 @@ Future<T?> makeRequest<T>({
       logout(context: context!);
     }
   }
+
+  if (onError != null) onError();
 
   return null;
 }

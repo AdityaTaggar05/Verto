@@ -14,7 +14,7 @@ func FetchSessions(c fiber.Ctx, search, count string) ([]models.Session, error) 
 
 	query := `
 		SELECT * FROM sessions
-		WHERE LOWER(title) LIKE '%' || $1 || '%'
+		WHERE LOWER(title) LIKE '%' || $1 || '%' AND is_booked = false
 		LIMIT $2;
 	`
 	if err := pgxscan.Select(c.Context(), DB, &sessions, query, strings.ToLower(search), count); err != nil {
@@ -73,6 +73,7 @@ func FetchRecentlyAddedSessions(c fiber.Ctx, uid string, count int) ([]models.Se
 
 	query := `
 		SELECT * FROM sessions
+		WHERE is_booked=false
 		ORDER BY created_at DESC
 		LIMIT $1;
 	`

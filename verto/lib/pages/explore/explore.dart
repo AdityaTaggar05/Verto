@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:verto/api/session.dart';
 import 'package:verto/models/session.dart';
+import 'package:verto/services/storage_service.dart';
+import 'package:verto/utils/elements.dart';
 import 'package:verto/utils/extensions.dart';
 import 'package:verto/widgets/coinbalance.dart';
 
@@ -132,7 +134,15 @@ class SessionCard extends StatefulWidget {
 }
 
 class _SessionCardState extends State<SessionCard> {
+  bool status = true;
   bool isExpanded = false;
+  bool isHost = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isHost = widget.session.hostID == StorageService().getID();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,10 +201,25 @@ class _SessionCardState extends State<SessionCard> {
               Text(widget.session.description, style: TextStyle(fontSize: 16)),
               SizedBox(height: 12),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: isHost || !status || widget.session.isBooked
+                    ? null
+                    : () async {
+                        setState(() => status = false);
+                        final bool success = await book(id: widget.session.id);
+
+                        if (!success) {
+                          showSnackBar(context, "Insufficient Balance");
+                        } else {
+                          widget.session.isBooked = true;
+                        }
+
+                        setState(() => status = true);
+                      },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  backgroundColor: Colors.blueAccent.shade700,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  backgroundColor: isHost || !status || widget.session.isBooked
+                      ? Colors.grey.shade800
+                      : Colors.blueAccent.shade700,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),

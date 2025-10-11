@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:verto/api/user.dart';
 import 'package:verto/models/session.dart';
+import 'package:verto/models/user.dart';
+import 'package:verto/services/storage_service.dart';
 import 'package:verto/utils/requests.dart';
 
 Future<List<Session>?> fetchRecent({required BuildContext context}) async =>
@@ -35,10 +38,22 @@ Future<Session?> create({
   return session;
 }
 
-void book({required String id}) async => await makeRequest<void>(
-  type: RequestType.post,
-  path: "/api/session/book/$id",
-);
+Future<bool> book({required String id}) async {
+  bool success = true;
+
+  await makeRequest<void>(
+    type: RequestType.post,
+    path: "/api/sessions/book/$id",
+    onError: () => success = false,
+  );
+
+  final User? user = await fetchUser();
+
+  StorageService().setCoins(user!.coins);
+  StorageService().setXP(user.xp);
+
+  return success;
+}
 
 Future<List<Session>?> fetchSessionsDaywise({
   required BuildContext context,

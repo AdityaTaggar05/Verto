@@ -13,12 +13,24 @@ class StorageService {
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
   }
+
   static const String _usernameKey = 'username_key';
   static const String _firstNameKey = 'first_name_key';
-  static const String _lastNameKey  = 'last_name_key';
+  static const String _lastNameKey = 'last_name_key';
   static const String _accessTokenKey = 'authorization_token_key';
   static const String _refreshTokenKey = 'refresh_token_key';
   static const String _passwordKey = 'password_key';
+  static const String _idKey = 'id_key';
+
+  // setter and getter function for username
+
+  Future<void> setID(String id) async {
+    await _prefs.setString(_idKey, id);
+  }
+
+  String getID() {
+    return _prefs.getString(_idKey) ?? '';
+  }
 
   // setter and getter function for username
 
@@ -27,7 +39,7 @@ class StorageService {
   }
 
   String getUsername() {
-    return _prefs.getString(_usernameKey) ??  'Guest';
+    return _prefs.getString(_usernameKey) ?? 'Guest';
   }
 
   // setter and getter function for first name
@@ -37,9 +49,9 @@ class StorageService {
   }
 
   String? getFirstName() {
-    return _prefs.getString(_firstNameKey) ;
+    return _prefs.getString(_firstNameKey);
   }
-  
+
   // setter and getter function for last name
 
   Future<void> setLastName(String lastName) async {
@@ -47,7 +59,7 @@ class StorageService {
   }
 
   String? getLastName() {
-    return _prefs.getString(_lastNameKey) ;
+    return _prefs.getString(_lastNameKey);
   }
 
   // getter and setter function for access token
@@ -57,11 +69,11 @@ class StorageService {
   }
 
   String? getAccessToken() {
-    return _prefs.getString(_accessTokenKey) ;
+    return _prefs.getString(_accessTokenKey);
   }
 
   // getter and setter function for refresh token
-  
+
   Future<void> setRefreshToken(String refreshToken) async {
     await _prefs.setString(_refreshTokenKey, refreshToken);
   }

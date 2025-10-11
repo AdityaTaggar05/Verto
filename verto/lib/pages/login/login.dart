@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:verto/pages/main.dart';
 import 'package:verto/pages/register/register.dart';
 import 'package:verto/services/auth.dart';
 import 'package:verto/widgets/custom_textfield.dart';
@@ -37,7 +38,6 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 1. Verto banner
                 const SizedBox(height: 40.0),
                 const Text(
                   'verto',
@@ -49,7 +49,6 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.blueAccent,
                   ),
                 ),
-                // 2. login banner
                 Center(
                   child: RichText(
                     text: TextSpan(
@@ -81,51 +80,78 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 40.0),
-
-                // 3. Username Field
                 CustomTextField(
                   controller: usernameController,
                   hintText: "Username",
                 ),
                 const SizedBox(height: 20.0),
-
-                // 4. Password Field
                 PasswordTextField(
                   hintText: "Password",
                   controller: passwordController,
                   obscureText: true,
                 ),
                 const SizedBox(height: 40.0),
-
-                // 5. login button final
-                ElevatedButton(
-                  onPressed: () {
-                    login(
+                LoginButton(
+                  onPressed: () async {
+                    final bool status = await login(
                       context: context,
                       username: usernameController.text,
                       password: passwordController.text,
                     );
+
+                    if (status) {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainPage()),
+                      );
+                    }
                   },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    backgroundColor: Colors.blueAccent.shade700,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LoginButton extends StatefulWidget {
+  const LoginButton({super.key, required this.onPressed});
+
+  final Future Function() onPressed;
+
+  @override
+  State<LoginButton> createState() => _LoginButtonState();
+}
+
+class _LoginButtonState extends State<LoginButton> {
+  bool status = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: status
+          ? () async {
+              setState(() => status = false);
+              await widget.onPressed();
+              setState(() => status = true);
+            }
+          : null,
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        backgroundColor: status
+            ? Colors.blueAccent.shade700
+            : Colors.grey.shade800,
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+      ),
+      child: const Text(
+        'Login',
+        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
       ),
     );
   }

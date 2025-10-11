@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:verto/models/user.dart';
-import 'package:verto/widgets/coinbalance.dart';
-import 'widgets/carousel.dart';
-import 'package:verto/api/sessions/recent.dart';
 import 'package:verto/models/session.dart';
+import 'package:verto/widgets/coinbalance.dart';
+
+import 'widgets/recently_added_section.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -49,12 +48,13 @@ class _ExplorePageState extends State<ExplorePage> {
         isCarousel = false;
         _filteredApiSessions = _allApiSessions.where((session) {
           return session.hostID.toLowerCase().contains(query) ||
-                 session.id.toLowerCase().contains(query);
+              session.id.toLowerCase().contains(query);
         }).toList();
       }
     });
   }
 
+  @override
   void initState() {
     super.initState();
     // _sessionsFuture = fetchRecentSessions();
@@ -188,15 +188,13 @@ class _SessionCardState extends State<SessionCard> {
                           ),
                         ),
                         SizedBox(height: 12),
-                        Text('Taken by: Aditya Taggar',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
+                        Text(
+                          'Taken by: Aditya Taggar',
+                          style: TextStyle(fontSize: 16),
                         ),
-                        Text('Timings: 4:00 pm to 5:00 pm',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
+                        Text(
+                          'Timings: 4:00 pm to 5:00 pm',
+                          style: TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
@@ -209,9 +207,7 @@ class _SessionCardState extends State<SessionCard> {
               Divider(color: Colors.grey.shade600, height: 32),
               Text(
                 "Flutter is an open-source software development kit (SDK) developed by Google",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 12),
               ElevatedButton(

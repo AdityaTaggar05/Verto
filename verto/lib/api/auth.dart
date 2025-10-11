@@ -10,7 +10,6 @@ Future<User?> registerUser({
   required String email,
   required String password,
   required String username,
-
 }) async {
   Map<String, dynamic> req = {
     "first_name": firstName,
@@ -19,7 +18,7 @@ Future<User?> registerUser({
     "email": email,
     "password": password,
   };
-  
+
   final http.Response response = await http.post(
     Uri.parse("https://verto-5rad.onrender.com/api/auth/register"),
     headers: {'Content-Type': 'application/json; charset=UTF-8'},
@@ -42,10 +41,7 @@ Future<User?> loginUser({
   required String username,
   required String password,
 }) async {
-  Map<String, dynamic> req = {
-    "username": username,
-    "password": password
-  };
+  Map<String, dynamic> req = {"username": username, "password": password};
 
   final http.Response response = await http.post(
     Uri.parse("https://verto-5rad.onrender.com/api/auth/login"),
@@ -57,6 +53,9 @@ Future<User?> loginUser({
     Map<String, dynamic> fetchedData = jsonDecode(response.body);
 
     User user = User.fromJson(fetchedData["data"]["user"]);
+
+    StorageService().setAccessToken(fetchedData["data"]["access_token"]);
+    StorageService().setRefreshToken(fetchedData["data"]["refresh_token"]);
 
     return user;
   } else {

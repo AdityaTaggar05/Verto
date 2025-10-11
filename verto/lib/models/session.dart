@@ -1,23 +1,33 @@
 class Session {
   String id;
   String hostID;
+  String title;
+  String description;
+  String hostName;
   int price;
   bool isBooked;
   DateTime startTime;
-  //constructor:-
   Session({
     required this.id,
     required this.hostID,
     required this.price,
     required this.startTime,
+    required this.title,
+    required this.description,
+    required this.hostName,
     this.isBooked = false,
   });
 
-  static fromJson(Map<String, dynamic> data) => Session(
+  static Session fromJson(Map<String, dynamic> data) {
+    return Session(
       id: data["id"],
       hostID: data["host_id"],
       price: data["price"],
-      startTime: data["start_time"],
+      startTime: DateTime.parse(data["start_time"]),
+      title: data["title"],
+      description: data["description"],
+      hostName: data["host_name"],
       isBooked: data["is_booked"],
     );
+  }
 }

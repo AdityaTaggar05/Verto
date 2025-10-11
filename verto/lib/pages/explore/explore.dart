@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:verto/models/user.dart';
 import 'package:verto/widgets/coinbalance.dart';
 import 'widgets/carousel.dart';
-import 'package:verto/api/sessions/recent.dart';
 import 'package:verto/models/session.dart';
 
 class ExplorePage extends StatefulWidget {

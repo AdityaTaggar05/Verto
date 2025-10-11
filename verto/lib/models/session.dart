@@ -13,13 +13,11 @@ class Session {
     this.isBooked = false,
   });
 
-  static fromJson(Map<String, dynamic> data) {
-    return Session(
+  static fromJson(Map<String, dynamic> data) => Session(
       id: data["id"],
       hostID: data["host_id"],
       price: data["price"],
       startTime: data["start_time"],
       isBooked: data["is_booked"],
     );
-  }
 }

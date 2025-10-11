@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:verto/models/session.dart';
 import 'package:verto/pages/profile/widgets/export.dart';
+import 'package:verto/widgets/coinbalance.dart';
+import 'widgets/wardrobe.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -45,7 +47,10 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         actions: [
-          IconButton(icon: const Icon(Icons.monetization_on), onPressed: () {}),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: CoinBalance(),
+          ),
         ],
       ),
       body: Padding(
@@ -53,9 +58,14 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const CircleAvatar(
-              radius: 80,
-              child: Icon(Icons.person, size: 80),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Wardrobe()));
+              },
+              child: const CircleAvatar(
+                radius: 80,
+                child: Icon(Icons.person, size: 80),
+              ),
             ),
             const SizedBox(height: 16),
             Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:verto/pages/explore/explore.dart';
-import 'home/home.dart'; // ✅ 1. Import your home.dart file
+import 'home/home.dart'; 
+import 'profile/profile.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -17,11 +18,9 @@ class _MainPageState extends State<MainPage> {
     const HomePage(), 
     const ExplorePage(),
     const Center(
-      child: Text('Page 3: Favorites', style: TextStyle(fontSize: 24)),
+      child: Text('Page 3: Messages', style: TextStyle(fontSize: 24)),
     ),
-    const Center(
-      child: Text('Page 4: Settings', style: TextStyle(fontSize: 24)),
-    ),
+    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -46,12 +45,12 @@ class _MainPageState extends State<MainPage> {
             label: 'Explore',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
+            icon: Icon(Icons.message),
+            label: 'Messages',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

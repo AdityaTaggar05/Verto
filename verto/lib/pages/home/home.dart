@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:verto/widgets/coinbalance.dart';
 import 'widgets/carousel.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,12 +12,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        actionsPadding: EdgeInsets.only(right: 12),
         leading: Padding(
           padding: EdgeInsets.only(left: 16),
           child: CircleAvatar(backgroundImage: AssetImage('assets/pfp.jpg')),
@@ -27,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.home), tooltip: 'exp'),
-          IconButton(onPressed: () {}, icon: Icon(Icons.shop),),
+          CoinBalance(),
         ],
       ),
 

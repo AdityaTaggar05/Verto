@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:verto/api/auth.dart';
+import 'package:verto/models/user.dart';
 import 'package:verto/utils/validators.dart';
 import 'package:verto/pages/login/login.dart';
 import 'package:verto/widgets/custom_textfield.dart';
@@ -18,32 +20,34 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmController = TextEditingController();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
+  final usernameController = TextEditingController();
+
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     confirmController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
     super.dispose();
   }
 
-  void register() {
+  void register() async {
     final email = emailController.text;
     final password = passwordController.text;
     final confirm = confirmController.text;
+    final username = usernameController.text;
     final firstName = firstNameController.text;
     final lastName = lastNameController.text;
 
     print('Register button pressed');
     print('Email: $email');
 
-    if(firstName.isEmpty) {
+    if (firstName.isEmpty) {
       const snackBar = SnackBar(
         content: Text(
           "Please enter your first name",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold
-          )
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color.fromARGB(241, 235, 125, 57),
       );
@@ -51,14 +55,11 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    if(lastName.isEmpty) {
+    if (lastName.isEmpty) {
       const snackBar = SnackBar(
         content: Text(
           "Please enter your last name",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold
-          )
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color.fromARGB(241, 235, 125, 57),
       );
@@ -70,10 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
       const snackBar = SnackBar(
         content: Text(
           "Passwords do not match",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold
-          )
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color.fromARGB(241, 235, 125, 57),
       );
@@ -81,34 +79,43 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    if(emailValidator(email) == 'Please enter a valid email') {
+    // TODO: Change responses to int for condition checking
+    if (emailValidator(email) == 'Please enter a valid email') {
       const snackBar = SnackBar(
         content: Text(
           "Please enter a valid email",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold
-          )
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Color.fromARGB(241, 235, 125, 57),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    } else if (emailValidator(email) == 'Please enter an email') {
+      const snackBar = SnackBar(
+        content: Text(
+          "No email was entered",
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Color.fromARGB(241, 235, 125, 57),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
     }
-    
-    else if(emailValidator(email) == 'Please enter an email') {
-      const snackBar = SnackBar(
-        content: Text(
-          "No email was entered",
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold
-          )
-        ),
-        backgroundColor: Color.fromARGB(241, 235, 125, 57),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return;
+
+    final User? user = await registerUser(
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      username: username,
+    );
+
+    if (user != null) {
+      // SAVE TOKENS
+      // SAVE USER INFO
+      // POP AND PUSH TO MAIN PAGE
+    } else {
+      // SHOW SNACKBAR FOR ERROR
     }
   }
 
@@ -159,7 +166,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             ..onTap = () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => LoginPage())
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(),
+                                ),
                               );
                               print('Navigate to Login Screen');
                             },
@@ -173,9 +182,19 @@ class _RegisterPageState extends State<RegisterPage> {
                 // 3. First Name & Last Name Fields
                 Row(
                   children: [
-                    Expanded(child: CustomTextField(hintText: 'First Name')),
+                    Expanded(
+                      child: CustomTextField(
+                        controller: firstNameController,
+                        hintText: 'First Name',
+                      ),
+                    ),
                     const SizedBox(width: 16.0),
-                    Expanded(child: CustomTextField(hintText: 'Last Name')),
+                    Expanded(
+                      child: CustomTextField(
+                        controller: lastNameController,
+                        hintText: 'Last Name',
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20.0),
@@ -189,7 +208,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 20.0),
 
                 // 5. Username Field
-                CustomTextField(hintText: 'Username'),
+                CustomTextField(
+                  controller: usernameController,
+                  hintText: 'Username',
+                ),
                 const SizedBox(height: 20.0),
 
                 // 6. Password & Confirm Password Fields

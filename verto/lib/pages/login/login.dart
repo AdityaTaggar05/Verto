@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:verto/pages/register/register.dart';
+import 'package:verto/services/auth.dart';
 import 'package:verto/widgets/custom_textfield.dart';
 import 'package:verto/widgets/password_text_field.dart';
 
@@ -15,14 +16,13 @@ class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  @override
   void dispose() {
     usernameController.dispose();
     passwordController.dispose();
+    super.dispose();
   }
 
-  void  login() {
-    
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +70,10 @@ class _LoginPageState extends State<LoginPage> {
                             ..onTap = () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => RegisterPage())
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterPage(),
+                                ),
                               );
-                              print('Navigate to register Screen');
                             },
                         ),
                       ],
@@ -99,7 +100,11 @@ class _LoginPageState extends State<LoginPage> {
                 // 5. login button final
                 ElevatedButton(
                   onPressed: () {
-                    login();
+                    login(
+                      context: context,
+                      username: usernameController.text,
+                      password: passwordController.text,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),

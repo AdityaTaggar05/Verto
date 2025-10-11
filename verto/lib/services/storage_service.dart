@@ -18,6 +18,7 @@ class StorageService {
   static const String _lastNameKey  = 'last_name_key';
   static const String _accessTokenKey = 'authorization_token_key';
   static const String _refreshTokenKey = 'refresh_token_key';
+  static const String _passwordKey = 'password_key';
 
   // setter and getter function for username
 
@@ -41,11 +42,11 @@ class StorageService {
   
   // setter and getter function for last name
 
-  Future<void> setlastName(String lastName) async {
+  Future<void> setLastName(String lastName) async {
     await _prefs.setString(_lastNameKey, lastName);
   }
 
-  String? getlastName() {
+  String? getLastName() {
     return _prefs.getString(_lastNameKey) ;
   }
 
@@ -66,6 +67,16 @@ class StorageService {
   }
 
   String? getRefreshToken() {
-    return _prefs.getString(_refreshTokenKey) ;
+    return _prefs.getString(_refreshTokenKey);
+  }
+
+  // getter and setter function for password
+
+  Future<void> setPassword(String password) async {
+    await _prefs.setString(_passwordKey, password);
+  }
+
+  String? getPassword() {
+    return _prefs.getString(_passwordKey);
   }
 }

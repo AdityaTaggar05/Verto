@@ -24,18 +24,24 @@ class _CreateSessionState extends State<CreateSession> {
     }
   }
 
-  void _submitSession() {
+  void submitSession() {
     final title = _titleController.text;
     final description = _descriptionController.text;
     final price = _sessionPrice;
     final time = _selectedTime;
 
     if (title.isEmpty || description.isEmpty || time == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill all fields and select a time.'),
+      const snackBar = SnackBar(
+        content: Text(
+          "Please fill al the fields correctly",
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold
+          )
         ),
+        backgroundColor: Color.fromARGB(241, 235, 125, 57),
       );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       return;
     }
   }
@@ -139,7 +145,7 @@ class _CreateSessionState extends State<CreateSession> {
               ),
               const Spacer(),
               ElevatedButton(
-                onPressed: () => _submitSession(),
+                onPressed: () => submitSession(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue.shade400,
                   foregroundColor: Colors.black,

@@ -1,4 +1,5 @@
 class User {
+  final String id;
   final String firstName;
   final String lastName;
   final String username;
@@ -8,6 +9,7 @@ class User {
   int xp;
 
   User({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.username,
@@ -18,6 +20,7 @@ class User {
   });
 
   static fromJson(Map<String, dynamic> json) => User(
+    id: json["id"],
     firstName: json["first_name"],
     lastName: json["last_name"],
     username: json["username"],

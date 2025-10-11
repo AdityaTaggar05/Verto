@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:verto/pages/explore/explore.dart';
 import 'home/home.dart'; 
 import 'profile/profile.dart';
+import 'package:advanced_salomon_bottom_bar/advanced_salomon_bottom_bar.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -11,7 +12,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;
+  int _currentIndex = 0;
 
   // This list now uses your HomePage for the first tab.
   static final List<Widget> _pages = <Widget>[
@@ -25,39 +26,48 @@ class _MainPageState extends State<MainPage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The AppBar is removed from here because your HomePage likely has its own.
-      body: _pages.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Explore',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Messages',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.indigo,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-      ),
+      body: _pages.elementAt(_currentIndex),
+       bottomNavigationBar: AdvancedSalomonBottomBar(
+          backgroundColor: Colors.white,
+          currentIndex: _currentIndex,
+          onTap: (i) => setState(() => _currentIndex = i),
+          items: [
+            /// Home
+            AdvancedSalomonBottomBarItem(
+              icon: Icon(Icons.home),
+              title: Text("Home"),
+              selectedColor: Colors.purple,
+            ),
+
+            /// Likes
+            AdvancedSalomonBottomBarItem(
+              icon: Icon(Icons.favorite_border),
+              title: Text("Explore"),
+              selectedColor: Colors.orange,
+            ),
+
+            /// Search
+            AdvancedSalomonBottomBarItem(
+              icon: Icon(Icons.search),
+              title: Text("Message"),
+              selectedColor: Colors.pink,
+            ),
+
+            /// Profile
+            AdvancedSalomonBottomBarItem(
+              icon: Icon(Icons.person),
+              title: Text("Profile"),
+              selectedColor: Colors.teal,
+            ),
+          ],
+       ),
     );
   }
 }

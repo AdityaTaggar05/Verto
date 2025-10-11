@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verto/widgets/coinbalance.dart';
-
+import 'package:verto/widgets/exp_bar.dart';
 import 'widgets/upcoming_section.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +24,10 @@ class _HomePageState extends State<HomePage> {
         ),
         title: Text('John Doe', style: TextStyle(color: Colors.black)),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.home), tooltip: 'exp'),
+          ExpBar(),
+          SizedBox(
+            width: 16,
+          ),
           CoinBalance(),
         ],
       ),

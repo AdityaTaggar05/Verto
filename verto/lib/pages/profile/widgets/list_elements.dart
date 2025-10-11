@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'confirm_dialogue.dart';
 
 class UnlockedAcquiredNotEquippedListElement extends StatefulWidget {
   UnlockedAcquiredNotEquippedListElement({
@@ -193,16 +194,19 @@ class _UnlockedUnaquiredListElementState extends State<UnlockedUnaquiredListElem
                 ],
               ),
               SizedBox(width: 10),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/coin.png',
-                    height: 40,
-                    width: 40,
-                  ),
-                  Text('20'),
-                ],
+              GestureDetector(
+                onTap: () => ConfirmDialogue(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/coin.png',
+                      height: 40,
+                      width: 40,
+                    ),
+                    Text('20'),
+                  ],
+                ),
               ),
             ],
           ),

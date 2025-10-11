@@ -35,8 +35,7 @@ class AvatarItem {
     this.isEquipped = false
   });
 
-  static fromJson(Map<String, dynamic> json) {
-    return AvatarItem(
+  static fromJson(Map<String, dynamic> json) => AvatarItem(
       id: json["id"],
       name: json["name"],
       itemCategory: json["ItemCategory"],
@@ -47,5 +46,4 @@ class AvatarItem {
       isAcquired: json["isAcquired"],
       isEquipped: json["isEquipped"]
     );
-  }
 }

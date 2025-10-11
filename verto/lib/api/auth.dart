@@ -1,0 +1,38 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'package:verto/models/user.dart';
+
+Future<User?> registerUser({
+  required String firstName,
+  required String lastName,
+  required String email,
+  required String password,
+  required String username,
+}) async {
+  Map<String, dynamic> req = {
+    "first_name": firstName,
+    "last_name": lastName,
+    "username": username,
+    "email": email,
+    "password": password,
+  };
+
+  final http.Response response = await http.post(
+    Uri.parse("https://verto-5rad.onrender.com/api/auth/register"),
+    headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    body: jsonEncode(req),
+  );
+
+  if (response.statusCode == 200) {
+    Map<String, dynamic> fetchedData = jsonDecode(response.body);
+
+    User user = User.fromJson(fetchedData["data"]["user"]);
+
+    return user;
+  }
+
+  return null;
+}

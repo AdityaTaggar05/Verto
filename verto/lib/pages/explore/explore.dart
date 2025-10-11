@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:verto/models/user.dart';
 import 'package:verto/widgets/coinbalance.dart';
 import 'widgets/carousel.dart';
+import 'package:verto/api/sessions/recent.dart';
+import 'package:verto/models/session.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -9,6 +12,9 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
+  late Future<List<Session>> _sessionsFuture;
+  List<Session> _allApiSessions = [];
+  List<Session> _filteredApiSessions = [];
   bool isCarousel = true;
 
   final TextEditingController _searchController = TextEditingController();
@@ -36,19 +42,22 @@ class _ExplorePageState extends State<ExplorePage> {
   void _filterSessions() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      _filteredSessions = _allSessions.where((session) {
+      if (query.isEmpty) {
+        _filteredApiSessions = _allApiSessions;
+        isCarousel = true;
+      } else {
         isCarousel = false;
-        final sessionLower = session.toLowerCase();
-        return sessionLower.contains(query);
-      }).toList();
+        _filteredApiSessions = _allApiSessions.where((session) {
+          return session.hostID.toLowerCase().contains(query) ||
+                 session.id.toLowerCase().contains(query);
+        }).toList();
+      }
     });
   }
 
   void initState() {
     super.initState();
-    // Initially, the filtered list contains all sessions
-    _filteredSessions = _allSessions;
-    // Listen for changes in the text field
+    // _sessionsFuture = fetchRecentSessions();
     _searchController.addListener(_filterSessions);
   }
 

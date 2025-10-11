@@ -25,4 +25,3 @@ class VertoApp extends StatelessWidget {
     );
   }
 }
-

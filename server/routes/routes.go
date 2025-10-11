@@ -13,4 +13,5 @@ func RegisterRoutes(app *fiber.App) {
 	api := app.Group("/api")
 	RegisterAuthRoutes(api.Group("/auth"))
 	RegisterSessionRoutes(api.Group("/sessions"))
+	RegisterWardrobeRoutes(api.Group("/wardrobe"))
 }

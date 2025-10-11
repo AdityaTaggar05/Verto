@@ -140,14 +140,20 @@ func BookSession(c fiber.Ctx, uid, sessionID string) error {
 	}
 
 	_, err = tx.Exec(c.Context(), `
-        UPDATE users SET coins = coins - $1 WHERE id = $2;
+        UPDATE users
+		SET coins = coins - $1,
+			xp = xp + 10
+		WHERE id = $2;
     `, price, uid)
 	if err != nil {
-		return fmt.Errorf("deducting coins: %w", err)
+		return fmt.Errorf("deducting coins and crediting xp: %w", err)
 	}
 
 	_, err = tx.Exec(c.Context(), `
-        UPDATE users SET coins = coins + $1 WHERE id = $2;
+        UPDATE users
+		SET coins = coins + $1,
+			xp = xp + 20
+		WHERE id = $2;
     `, price, hostID)
 	if err != nil {
 		return fmt.Errorf("adding coins: %w", err)

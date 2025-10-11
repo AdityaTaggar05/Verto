@@ -16,7 +16,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
-
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   @override
   void dispose() {
     emailController.dispose();
@@ -29,9 +30,41 @@ class _RegisterPageState extends State<RegisterPage> {
     final email = emailController.text;
     final password = passwordController.text;
     final confirm = confirmController.text;
+    final firstName = firstNameController.text;
+    final lastName = lastNameController.text;
 
     print('Register button pressed');
     print('Email: $email');
+
+    if(firstName.isEmpty) {
+      const snackBar = SnackBar(
+        content: Text(
+          "Please enter your first name",
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold
+          )
+        ),
+        backgroundColor: Color.fromARGB(241, 235, 125, 57),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
+
+    if(lastName.isEmpty) {
+      const snackBar = SnackBar(
+        content: Text(
+          "Please enter your last name",
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold
+          )
+        ),
+        backgroundColor: Color.fromARGB(241, 235, 125, 57),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
 
     if (password != confirm) {
       const snackBar = SnackBar(

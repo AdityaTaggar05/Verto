@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:verto/api/auth.dart';
-import 'package:verto/models/user.dart';
+import 'package:verto/services/auth.dart';
 import 'package:verto/utils/validators.dart';
 import 'package:verto/pages/login/login.dart';
 import 'package:verto/widgets/custom_textfield.dart';
@@ -30,93 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
     firstNameController.dispose();
     lastNameController.dispose();
     super.dispose();
-  }
-
-  void register() async {
-    final email = emailController.text;
-    final password = passwordController.text;
-    final confirm = confirmController.text;
-    final username = usernameController.text;
-    final firstName = firstNameController.text;
-    final lastName = lastNameController.text;
-
-    print('Register button pressed');
-    print('Email: $email');
-
-    if (firstName.isEmpty) {
-      const snackBar = SnackBar(
-        content: Text(
-          "Please enter your first name",
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(241, 235, 125, 57),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return;
-    }
-
-    if (lastName.isEmpty) {
-      const snackBar = SnackBar(
-        content: Text(
-          "Please enter your last name",
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(241, 235, 125, 57),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return;
-    }
-
-    if (password != confirm) {
-      const snackBar = SnackBar(
-        content: Text(
-          "Passwords do not match",
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(241, 235, 125, 57),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return;
-    }
-
-    // TODO: Change responses to int for condition checking
-    if (emailValidator(email) == 'Please enter a valid email') {
-      const snackBar = SnackBar(
-        content: Text(
-          "Please enter a valid email",
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(241, 235, 125, 57),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return;
-    } else if (emailValidator(email) == 'Please enter an email') {
-      const snackBar = SnackBar(
-        content: Text(
-          "No email was entered",
-          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(241, 235, 125, 57),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return;
-    }
-
-    final User? user = await registerUser(
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      username: username,
-    );
-
-    if (user != null) {
-      // SAVE TOKENS
-      // SAVE USER INFO
-      // POP AND PUSH TO MAIN PAGE
-    } else {
-      // SHOW SNACKBAR FOR ERROR
-    }
   }
 
   @override
@@ -170,7 +82,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                   builder: (context) => LoginPage(),
                                 ),
                               );
-                              print('Navigate to Login Screen');
                             },
                         ),
                       ],
@@ -239,7 +150,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 // 7. Register Button
                 ElevatedButton(
                   onPressed: () {
-                    register();
+                    register(
+                      context: context,
+                      email: emailController.text,
+                      password: passwordController.text,
+                      confirm: confirmController.text,
+                      username: usernameController.text,
+                      firstName: firstNameController.text,
+                      lastName: lastNameController.text
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),

@@ -13,5 +13,5 @@ type User struct {
 	Level     int        `json:"level" db:"level"`
 	XP        int        `json:"xp" db:"xp"`
 	CreatedAt time.Time  `json:"created_at" db:"created_at"`
-	LastLogin *time.Time `json:"last_login" db:"last_login"`
+	LastLogin *time.Time `json:"-" db:"last_login"`
 }

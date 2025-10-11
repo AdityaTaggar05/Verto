@@ -13,8 +13,10 @@ import (
 )
 
 type createSessionRequest struct {
-	StartTime time.Time `json:"start_time"`
-	Price     int       `json:"price"`
+	StartTime   time.Time `json:"start_time"`
+	Price       int       `json:"price"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
 }
 
 func FetchUpcomingSessions(c fiber.Ctx) error {
@@ -47,20 +49,28 @@ func FetchRecentlyAddedSessions(c fiber.Ctx) error {
 func CreateSession(c fiber.Ctx) error {
 	uid := c.Locals("uid").(string)
 
-	log.Println("[UID]:", uid)
-
 	req, err := utils.ValidateBody[createSessionRequest](c)
 
 	if err != nil {
 		return nil
 	}
 
+	user, err := database.FetchUserFromUID(c, uid)
+
+	if err != nil {
+		log.Println("[SESSIONS]:", err.Error())
+		return utils.RespondError(c, fiber.StatusInternalServerError, err.Error())
+	}
+
 	session := models.Session{
-		ID:        uuid.NewString(),
-		HostID:    uid,
-		StartTime: req.StartTime,
-		Price:     req.Price,
-		CreatedAt: time.Now(),
+		ID:          uuid.NewString(),
+		HostID:      uid,
+		HostName:    user.FirstName + " " + user.LastName,
+		Title:       req.Title,
+		Description: req.Description,
+		StartTime:   req.StartTime,
+		Price:       req.Price,
+		CreatedAt:   time.Now(),
 	}
 
 	err = database.CreateSession(c, session)
@@ -85,4 +95,48 @@ func BookSession(c fiber.Ctx) error {
 	}
 
 	return utils.RespondSuccess(c, fiber.StatusOK, "session booked successfully", nil)
+}
+
+func FetchTimeline(c fiber.Ctx) error {
+	uid := c.Locals("uid").(string)
+	mode := c.Query("mode")
+
+	var sessions []models.Session
+	var err error
+
+	if mode == "today" {
+		sessions, err = database.FetchTodaySessions(c, uid)
+
+		if err != nil {
+			log.Println("[SESSIONS]:", err.Error())
+			return utils.RespondError(c, fiber.StatusInternalServerError, err.Error())
+		}
+	} else {
+		sessions, err = database.FetchTomorrowSessions(c, uid)
+
+		if err != nil {
+			log.Println("[SESSIONS]:", err.Error())
+			return utils.RespondError(c, fiber.StatusInternalServerError, err.Error())
+		}
+	}
+
+	return utils.RespondSuccess(c, fiber.StatusOK, "sessions fetched successfully", sessions)
+}
+
+func FetchSessions(c fiber.Ctx) error {
+	search := c.Query("search")
+	count := c.Query("count")
+
+	if count == "" {
+		count = "10"
+	}
+
+	sessions, err := database.FetchSessions(c, search, count)
+
+	if err != nil {
+		log.Println("[SESSIONS]:", err.Error())
+		return utils.RespondError(c, fiber.StatusInternalServerError, err.Error())
+	}
+
+	return utils.RespondSuccess(c, fiber.StatusOK, "sessions fetched successfully", sessions)
 }

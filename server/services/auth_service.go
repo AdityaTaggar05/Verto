@@ -47,6 +47,8 @@ func Register(c fiber.Ctx) error {
 		return utils.RespondError(c, fiber.StatusInternalServerError, "cannot hash the given password")
 	}
 
+	now := time.Now()
+
 	user := models.User{
 		ID:        uuid.NewString(),
 		FirstName: req.FirstName,
@@ -57,7 +59,8 @@ func Register(c fiber.Ctx) error {
 		Coins:     200,
 		Level:     1,
 		XP:        0,
-		CreatedAt: time.Now(),
+		CreatedAt: now,
+		LastLogin: &now,
 	}
 
 	err = database.CreateUser(c, user)
@@ -77,7 +80,7 @@ func Register(c fiber.Ctx) error {
 	}
 
 	return utils.RespondSuccess(c, fiber.StatusCreated, "User created successfully", map[string]any{
-		"user":          req,
+		"user":          user,
 		"access_token":  accessToken,
 		"refresh_token": refreshToken,
 	})
@@ -110,13 +113,25 @@ func Login(c fiber.Ctx) error {
 	refreshToken, err := database.UpdateRefreshToken(c, user.ID, REFRESH_TOKEN_DURATION)
 
 	if err != nil {
+		log.Println("[LOGIN]:", err.Error())
 		return utils.RespondError(c, fiber.StatusUnauthorized, err.Error())
 	}
+
+	resp, err := database.DailyCheckIn(c, user.ID)
+
+	if err != nil {
+		log.Println("[LOGIN]:", err.Error())
+		return utils.RespondError(c, fiber.StatusUnauthorized, err.Error())
+	}
+
+	user.Coins = resp.Coins
+	user.LastLogin = &resp.LastLogin
 
 	return utils.RespondSuccess(c, fiber.StatusOK, "User logged in successfully", map[string]any{
 		"access_token":  accessToken,
 		"refresh_token": refreshToken,
 		"user":          *user,
+		"checked_in":    resp.CheckedIn,
 	})
 }
 

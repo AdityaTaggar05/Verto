@@ -28,7 +28,7 @@ Future<Session?> create({
     "description": description,
   };
 
-  Session? session = await makeRequest<Session>(
+  Session? session = await makeRequest<Session> (
     type: RequestType.post,
     path: "/api/sessions/create",
     data: req,

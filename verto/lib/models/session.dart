@@ -3,8 +3,6 @@ class Session {
   String title;
   String description;
   String hostID;
-  String title;
-  String description;
   String hostName;
   int price;
   bool isBooked;
@@ -16,8 +14,6 @@ class Session {
     required this.hostID,
     required this.price,
     required this.startTime,
-    required this.title,
-    required this.description,
     required this.hostName,
     this.isBooked = false,
   });

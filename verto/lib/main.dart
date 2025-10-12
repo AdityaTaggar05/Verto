@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:verto/pages/register/register.dart';
+import 'package:verto/pages/login/login.dart';
+import 'package:verto/pages/main.dart';
 import 'package:verto/services/storage_service.dart';
 
 void main() async {
@@ -14,6 +15,6 @@ class VertoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: RegisterPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginPage());
   }
 }

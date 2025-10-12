@@ -1,16 +1,6 @@
-enum ItemCategory{
-  skin,
-  weapon,
-  pet,
-  armor
-}
+enum ItemCategory { skin, weapon, pet, armor }
 
-enum ItemRarity{
-  common,
-  rare,
-  epic,
-  legendary
-}
+enum ItemRarity { common, rare, epic, legendary }
 
 class AvatarItem {
   final String id;
@@ -19,7 +9,6 @@ class AvatarItem {
   final ItemRarity itemRarity;
   final int levelRequired;
   final int price;
-  final String imageUrl;
   bool isAcquired = false;
   bool isEquipped = false;
 
@@ -30,20 +19,18 @@ class AvatarItem {
     required this.itemRarity,
     required this.levelRequired,
     required this.price,
-    required this.imageUrl,
     this.isAcquired = false,
-    this.isEquipped = false
+    this.isEquipped = false,
   });
 
   static fromJson(Map<String, dynamic> json) => AvatarItem(
-      id: json["id"],
-      name: json["name"],
-      itemCategory: json["ItemCategory"],
-      itemRarity: json["ItemRarity"],
-      levelRequired: json["levelRequired"],
-      price: json["price"],
-      imageUrl: json["imageUrl"],
-      isAcquired: json["isAcquired"],
-      isEquipped: json["isEquipped"]
-    );
+    id: json["id"],
+    name: json["name"],
+    itemCategory: json["ItemCategory"],
+    itemRarity: json["ItemRarity"],
+    levelRequired: json["levelRequired"],
+    price: json["price"],
+    isAcquired: json["isAcquired"],
+    isEquipped: json["isEquipped"],
+  );
 }

@@ -41,8 +41,8 @@ func FetchItemsForCategory(c fiber.Ctx, category string) ([]models.Item, error) 
 
 func CreateItem(c fiber.Ctx, item models.Item) error {
 	_, err := DB.Exec(c.Context(), `
-		INSERT INTO avatar_items (id, name, category, price, level_required, rarity, created_at)
-		VALUES ($1, $2, $3, $4, $5, $6, $7)
+		INSERT INTO avatar_items (id, name, category, price, level_required, rarity, created_at, image_url)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, '')
 	`, item.ID, item.Name, item.Category, item.Price, item.LevelRequired, item.Rarity, item.CreatedAt)
 
 	return err

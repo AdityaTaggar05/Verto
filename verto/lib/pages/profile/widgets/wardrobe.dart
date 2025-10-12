@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:verto/services/storage_service.dart';
+import 'package:verto/widgets/avatar_widget.dart';
 import 'package:verto/widgets/coinbalance.dart';
 
 import 'list_elements.dart';
-
-int state1 = 0;
-int state2 = 1;
-int state3 = 2;
-int state4 = 3;
 
 class Wardrobe extends StatefulWidget {
   const Wardrobe({super.key});
@@ -83,10 +79,10 @@ class _WardrobeState extends State<Wardrobe>
             children: [
               Column(
                 children: [
-                  ListElement(state1),
-                  ListElement(state2),
-                  ListElement(state3),
-                  ListElement(state4),
+                  ListElement(0),
+                  ListElement(1),
+                  ListElement(2),
+                  ListElement(3),
                 ],
               ),
             ],
@@ -117,14 +113,7 @@ class _WardrobeState extends State<Wardrobe>
                 SizedBox(
                   height: 275,
                   width: 275,
-                  child: Stack(
-                    children: [
-                      Image.asset("assets/Dog.png"),
-                      Image.asset("assets/Female Dragonborn.png"),
-                      Image.asset("assets/Royal Armour.png"),
-                      Image.asset("assets/Spear.png"),
-                    ],
-                  ),
+                  child: AvatarWidget(uid: StorageService().getID()),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),

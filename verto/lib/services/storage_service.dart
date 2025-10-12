@@ -21,8 +21,10 @@ class StorageService {
   static const String _refreshTokenKey = 'refresh_token_key';
   static const String _passwordKey = 'password_key';
   static const String _idKey = 'id_key';
+  static const String _xpKey = 'xp_key';
+  static const String _coinsKey = 'coins_key';
 
-  // setter and getter function for username
+  // setter and getter function for id
 
   Future<void> setID(String id) async {
     await _prefs.setString(_idKey, id);
@@ -30,6 +32,26 @@ class StorageService {
 
   String getID() {
     return _prefs.getString(_idKey) ?? '';
+  }
+
+  // setter and getter function for xp
+
+  Future<void> setXP(int xp) async {
+    await _prefs.setInt(_xpKey, xp);
+  }
+
+  int getXP() {
+    return _prefs.getInt(_idKey) ?? 0;
+  }
+
+  // setter and getter function for coins
+
+  Future<void> setCoins(int coins) async {
+    await _prefs.setInt(_coinsKey, coins);
+  }
+
+  int getCoins() {
+    return _prefs.getInt(_coinsKey) ?? 0;
   }
 
   // setter and getter function for username

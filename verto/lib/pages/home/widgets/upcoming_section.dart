@@ -19,7 +19,7 @@ class _UpcomingSessionsCarouselState extends State<UpcomingSessionsCarousel> {
     return FutureBuilder<List<Session>?>(
       future: fetchUpcoming(context),
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Padding(
             padding: const EdgeInsets.all(32.0),
             child: Center(child: CircularProgressIndicator()),

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:verto/api/user.dart';
 import 'package:verto/models/session.dart';
+import 'package:verto/models/user.dart';
+import 'package:verto/services/storage_service.dart';
 import 'package:verto/utils/requests.dart';
 
 Future<List<Session>?> fetchRecent({required BuildContext context}) async =>
     await makeRequest<List<Session>>(
-      type: RequestType.post,
+      context: context,
+      type: RequestType.get,
       path: "/api/sessions/recent?count=10",
       fromJson: (fetched) =>
           fetched.map<Session>((session) => Session.fromJson(session)).toList(),
@@ -24,7 +28,7 @@ Future<Session?> create({
     "description": description,
   };
 
-  Session? session = await makeRequest<Session>(
+  Session? session = await makeRequest<Session> (
     type: RequestType.post,
     path: "/api/sessions/create",
     data: req,
@@ -34,12 +38,21 @@ Future<Session?> create({
   return session;
 }
 
-void book({required String id}) async {
-  void book = await makeRequest<void>(
+Future<bool> book({required String id}) async {
+  bool success = true;
+
+  await makeRequest<void>(
     type: RequestType.post,
-    path: "/api/session/book/$id",
+    path: "/api/sessions/book/$id",
+    onError: () => success = false,
   );
-  return;
+
+  final User? user = await fetchUser();
+
+  StorageService().setCoins(user!.coins);
+  StorageService().setXP(user.xp);
+
+  return success;
 }
 
 Future<List<Session>?> fetchSessionsDaywise({
@@ -48,6 +61,7 @@ Future<List<Session>?> fetchSessionsDaywise({
   required String day,
 }) async {
   List<Session>? sessions = await makeRequest<List<Session>>(
+    context: context,
     type: RequestType.get,
     path: "/api/sessions/timeline?mode=$day",
     fromJson: (fetched) =>
@@ -64,6 +78,7 @@ Future<List<Session>?> fetchSessionSearchwise({
   required String search,
 }) async {
   List<Session>? sessions = await makeRequest<List<Session>>(
+    context: context,
     type: RequestType.get,
     path: "/api/sessions?count=$count&search=$search",
     fromJson: (fetched) =>
@@ -76,6 +91,7 @@ Future<List<Session>?> fetchSessionSearchwise({
 
 Future<List<Session>?> fetchUpcoming(BuildContext context) async =>
     await makeRequest<List<Session>>(
+      context: context,
       type: RequestType.get,
       path: "/api/sessions/upcoming",
       fromJson: (fetched) {

@@ -7,6 +7,7 @@ class Session {
   int price;
   bool isBooked;
   DateTime startTime;
+
   Session({
     required this.id,
     required this.title,

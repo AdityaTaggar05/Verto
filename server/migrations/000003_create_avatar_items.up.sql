@@ -8,6 +8,5 @@ CREATE TABLE avatar_items (
 	rarity item_rarity NOT NULL DEFAULT 'common',
 	price int NOT NULL,
 	level_required int NOT NULL DEFAULT 1,
-	image_url text NOT NULL,
 	created_at timestamp NOT NULL DEFAULT NOW()
 );

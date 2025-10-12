@@ -28,7 +28,6 @@ class SessionTimeline extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Column(
-                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Container(
                     width: 18,
@@ -91,6 +90,26 @@ class SessionTimeline extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+              Column(
+                children: [
+                  Text(
+                    "Booking Status: ",
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    width: 18,
+                    height: 18,
+                    decoration: BoxDecoration(
+                      color: session.isBooked ? Colors.green : Colors.grey,
+                      shape: BoxShape.circle,
+                    ),
+                    child: session.isBooked
+                        ? const Icon(Icons.check, size: 12, color: Colors.white)
+                        : const Text(""),
+                  ),
+                ],
               ),
             ],
           );

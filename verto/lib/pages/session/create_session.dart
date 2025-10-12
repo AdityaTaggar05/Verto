@@ -78,6 +78,7 @@ class _CreateSessionState extends State<CreateSession> {
               const SizedBox(height: 8),
               TextField(
                 controller: _titleController,
+                maxLength: 30,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'e.g., Coding Basics 101',
@@ -91,7 +92,7 @@ class _CreateSessionState extends State<CreateSession> {
               const SizedBox(height: 8),
               TextField(
                 controller: _descriptionController,
-                maxLines: 4,
+                maxLength: 80,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Some more details... ',

@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: CoinBalance(),
+            child: CoinBalance(coins: StorageService().getCoins()),
           ),
         ],
       ),

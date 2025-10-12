@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:verto/services/storage_service.dart';
 import 'package:verto/widgets/coinbalance.dart';
+
 import 'list_elements.dart';
 
 int state1 = 0;
 int state2 = 1;
 int state3 = 2;
 int state4 = 3;
-
 
 class Wardrobe extends StatefulWidget {
   const Wardrobe({super.key});
@@ -101,7 +102,7 @@ class _WardrobeState extends State<Wardrobe>
       appBar: AppBar(
         backgroundColor: Colors.white,
         actionsPadding: const EdgeInsets.only(right: 12),
-        actions: [CoinBalance()],
+        actions: [CoinBalance(coins: StorageService().getCoins())],
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -113,13 +114,18 @@ class _WardrobeState extends State<Wardrobe>
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(height: 275, width: 275, child: Stack(children: [
-                    Image.asset("assets/Dog.png"),
-                    Image.asset("assets/Female Dragonborn.png"),
-                    Image.asset("assets/Royal Armour.png"),
-                    Image.asset("assets/Spear.png")
-                  ],
-                )),
+                SizedBox(
+                  height: 275,
+                  width: 275,
+                  child: Stack(
+                    children: [
+                      Image.asset("assets/Dog.png"),
+                      Image.asset("assets/Female Dragonborn.png"),
+                      Image.asset("assets/Royal Armour.png"),
+                      Image.asset("assets/Spear.png"),
+                    ],
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -230,4 +236,3 @@ class _WardrobeState extends State<Wardrobe>
     );
   }
 }
-

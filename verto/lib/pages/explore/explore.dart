@@ -194,7 +194,7 @@ class _SessionCardState extends State<SessionCard> {
                     ),
                   ),
                 ),
-                CoinBalance(),
+                CoinBalance(coins: widget.session.price),
               ],
             ),
             if (isExpanded) ...[
@@ -212,6 +212,7 @@ class _SessionCardState extends State<SessionCard> {
                           showSnackBar(context, "Insufficient Balance");
                         } else {
                           widget.session.isBooked = true;
+                          showSnackBar(context, "Session Booked");
                         }
 
                         setState(() => status = true);

@@ -28,7 +28,11 @@ class _HomePageState extends State<HomePage> {
           StorageService().getUsername(),
           style: TextStyle(color: Colors.black),
         ),
-        actions: [ExpBar(), SizedBox(width: 16), CoinBalance()],
+        actions: [
+          ExpBar(),
+          SizedBox(width: 16),
+          CoinBalance(coins: StorageService().getCoins()),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:verto/pages/main.dart';
 import 'package:verto/pages/register/register.dart';
 import 'package:verto/services/auth.dart';
+import 'package:verto/utils/elements.dart';
 import 'package:verto/widgets/custom_textfield.dart';
 import 'package:verto/widgets/password_text_field.dart';
 
@@ -134,6 +135,7 @@ class _LoginButtonState extends State<LoginButton> {
     return ElevatedButton(
       onPressed: status
           ? () async {
+              showSnackBar(context, "100 coins have been credited in your account");
               setState(() => status = false);
               await widget.onPressed();
               setState(() => status = true);

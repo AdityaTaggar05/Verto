@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:verto/models/user.dart';
 import 'package:verto/services/storage_service.dart';
+import 'package:verto/utils/elements.dart';
 
 Future<User?> registerUser({
   required String firstName,
@@ -53,7 +54,6 @@ Future<User?> loginUser({
     Map<String, dynamic> fetchedData = jsonDecode(response.body);
 
     User user = User.fromJson(fetchedData["data"]["user"]);
-
     StorageService().setAccessToken(fetchedData["data"]["access_token"]);
     StorageService().setRefreshToken(fetchedData["data"]["refresh_token"]);
 

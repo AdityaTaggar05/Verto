@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:verto/pages/Chat/chat.dart';
 import 'package:verto/pages/explore/explore.dart';
 import 'home/home.dart'; 
 import 'profile/profile.dart';
@@ -18,9 +19,7 @@ class _MainPageState extends State<MainPage> {
   static final List<Widget> _pages = <Widget>[
     const HomePage(), 
     const ExplorePage(),
-    const Center(
-      child: Text('Page 3: Messages', style: TextStyle(fontSize: 24)),
-    ),
+    const VertoChat(),
     const ProfilePage(),
   ];
 

@@ -28,10 +28,10 @@ Welcome to Verto, a unique platform designed for individuals who want to share t
 ### Team Members
 <table>
   <tr>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/41536267?v=4" width="60" height="60" style="border-radius: 50%;"></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/130533959?v=4" width="60" height="60" style="border-radius: 50%;"></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/228034908?v=4" width="60" height="60" style="border-radius: 50%;"></td>
-    <td align="center"><img src="https://avatars.githubusercontent.com/u/214784934?v=4" width="60" height="60" style="border-radius: 50%;"></td>
+    <td align="center"><a href="https://github.com/AdityaTaggar05" target="_blank"><img src="https://avatars.githubusercontent.com/u/41536267?v=4" width="60" height="60" style="border-radius: 50%;"></td>
+    <td align="center"><a href="https://github.com/kingspin-42" target="_blank"><img src="https://avatars.githubusercontent.com/u/130533959?v=4" width="60" height="60" style="border-radius: 50%;"></td>
+    <td align="center"><a href="https://github.com/shasakarora" target="_blank"><img src="https://avatars.githubusercontent.com/u/228034908?v=4" width="60" height="60" style="border-radius: 50%;"></td>
+    <td align="center"><a href="https://github.com/Vedansh-Sethi" target="_blank"><img src="https://avatars.githubusercontent.com/u/214784934?v=4" width="60" height="60" style="border-radius: 50%;"></td>
   </tr>
   <tr>
     <td align="center"><strong>Aditya Taggar</strong></td>

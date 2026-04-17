@@ -7,7 +7,7 @@ import 'package:verto/services/auth.dart';
 import 'package:verto/services/storage_service.dart';
 import 'package:verto/widgets/coinbalance.dart';
 
-import 'widgets/wardrobe.dart';
+import '../wardrobe/wardrobe.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

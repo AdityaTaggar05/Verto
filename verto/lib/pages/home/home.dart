@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:verto/services/storage_service.dart';
+import 'package:verto/widgets/avatar_widget.dart';
 import 'package:verto/widgets/coinbalance.dart';
 import 'package:verto/widgets/exp_bar.dart';
 
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         actionsPadding: EdgeInsets.only(right: 12),
         leading: Padding(
           padding: EdgeInsets.only(left: 16),
-          child: CircleAvatar(backgroundImage: AssetImage('assets/pfp.jpg')),
+          child: AvatarBadge(height: 160, width: 160, uid: ""),
         ),
         title: Text(
           StorageService().getUsername(),

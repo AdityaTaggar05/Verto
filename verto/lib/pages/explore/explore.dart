@@ -4,6 +4,7 @@ import 'package:verto/models/session.dart';
 import 'package:verto/services/storage_service.dart';
 import 'package:verto/utils/elements.dart';
 import 'package:verto/utils/extensions.dart';
+import 'package:verto/widgets/avatar_widget.dart';
 import 'package:verto/widgets/coinbalance.dart';
 
 import 'widgets/recently_added_section.dart';
@@ -163,7 +164,7 @@ class _SessionCardState extends State<SessionCard> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/pfp.jpg', height: 80, width: 80),
+                AvatarBadge(height: 80, width: 80, uid: widget.session.hostID),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
